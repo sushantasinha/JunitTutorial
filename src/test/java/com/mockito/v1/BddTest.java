@@ -73,7 +73,6 @@ public class BddTest {
     One with "Dummy" as param
     Another is "abc" as param
      */
-
     @Test
     public void testThenCaptureAugumentBDDMultipleCall() {
 
