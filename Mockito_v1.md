@@ -72,7 +72,91 @@ Mockito Annotations
 @Captor
 
 
-__
+If you are using Junit version < 5, so you have to use @RunWith(SpringRunner.class) or @RunWith(MockitoJUnitRunner.class) etc.
+If you are using Junit version = 5, so you have to use @ExtendWith(SpringExtension.class) or @ExtendWith(MockitoExtension.class) etc.
+
+SpringRunner
+MockitoJUnitRunner
+SpringExtension
+MockitoExtension
+
+
+### What is the difference between @ExtendWith(SpringExtension.class) and @ExtendWith(MockitoExtension.class)?
+
+#### When involving Spring:
+
+If you want to use Spring test framework features in your tests like for example @MockBean, then you have to use @ExtendWith(SpringExtension.class). It replaces the deprecated JUnit4 @RunWith(SpringJUnit4ClassRunner.class)
+
+#### When NOT involving Spring:
+
+If you just want to involve Mockito and don't have to involve Spring, for example, when you just want to use the @Mock / @InjectMocks annotations, 
+then you want to use @ExtendWith(MockitoExtension.class), as it doesn't load in a bunch of unneeded Spring stuff. It replaces the deprecated JUnit4 @RunWith(MockitoJUnitRunner.class).
+
+#### To answer your question:
+
+Yes you can just use @ExtendWith(SpringExtension.class), but if you're not involving Spring test framework features in your tests, then you probably want to just use @ExtendWith(MockitoExtension.class).
+
+
+Instead of using 
+```
+ TodoService todoService = mock(TodoService.class);
+```
+
+We can use:
+```
+@ExtendWith(MockitoExtension.class)
+public class TodoBusinessImplWIthMockWithAnnotationTest {
+
+    @Mock
+    TodoService todoService;
+
+    ......
+
+}
+```
+
+Please note, if we use @Mock, then need @ExtendWith(MockitoExtension.class) to be added 
+
+
+@Mock vs @InjectMock
+
+```
+ExtendWith(MockitoExtension.class)
+public class CTodoBusinessImplWIthInjectMockWithAnnotationTest {
+
+    @Mock
+    TodoService todoService;
+
+    @InjectMocks
+    TodoBusinessImpl todoBusinessImpl;
+
+    @Test
+    public void usingMockito() {
+
+    }
+}
+```
+
+@InjectMock will allow mockito to check all the instance variables inside TodoBusinessImpl, and check for those members if there is any @Mock available. Like, TodoBusinessImpl has one instance member for TodoService...
+And, corresponding mock is available in the test class
+
+```
+    @Mock
+    TodoService todoService;
+```
+
+So, it will create an instance for TodoBusinessImpl and for that instance's TodoService, wil be mocked by (@Mock TodoService todoService;)
+
+
+ArgumentCaptor<String> stringSrgumentCaptor = ArgumentCaptor.forClass(String.class);
+
+can be replaced by:
+```
+    @Captor
+    ArgumentCaptor<String> stringArgumentCaptor;
+```
+
+
 
 
 

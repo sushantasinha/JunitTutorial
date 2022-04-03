@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class HamcrestMatchersTest {
+public class AHamcrestMatchersTest {
 
     @Test
     public void hamcrestMatchersOptionsTest() {
