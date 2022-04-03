@@ -32,13 +32,18 @@ public class TodoBusinessImplWIthMockTest {
     @Test
     public void usingMockito() {
         //mock() on Class or interface
+
+        //Given
         TodoService todoService = mock(TodoService.class);
         List<String> allTodos = Arrays.asList("Learn Spring MVC",
                 "Learn Spring", "Learn to Dance");
         when(todoService.retrieveTodos("dummy")).thenReturn(allTodos);
         TodoBusinessImpl todoBusinessImpl = new TodoBusinessImpl(todoService);
-        List<String> todos = todoBusinessImpl
-                .retrieveTodosRelatedToSpring("dummy");
+
+        //When
+        List<String> todos = todoBusinessImpl.retrieveTodosRelatedToSpring("dummy");
+
+        //Then
         assertEquals(2, todos.size());
     }
 

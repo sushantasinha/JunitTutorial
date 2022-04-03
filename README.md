@@ -113,4 +113,9 @@ Disadvantages of Stub:
 Basically in Stub we preparing a dummy obj and passing as method param
 In Mock we creating mock and using java reflection
 
+
+GIVEN-WHEN-THEN -> this is the way to write junit with mock, this is base of BDD
+
+
+
   
