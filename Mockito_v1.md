@@ -148,13 +148,50 @@ And, corresponding mock is available in the test class
 So, it will create an instance for TodoBusinessImpl and for that instance's TodoService, wil be mocked by (@Mock TodoService todoService;)
 
 
-ArgumentCaptor<String> stringSrgumentCaptor = ArgumentCaptor.forClass(String.class);
+ArgumentCaptor<String> stringArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
 can be replaced by:
 ```
     @Captor
     ArgumentCaptor<String> stringArgumentCaptor;
 ```
+
+
+Instead of Junit runner, we can sue rule:
+
+Junit Runner:
+```
+ExtendWith(MockitoExtension.class)
+public class CTodoBusinessImplWIthInjectMockWithAnnotationTest {
+
+}
+```
+
+@Rule
+public MocktoRule m = MockitoExtension.rule();
+
+The advantage of Rule is we can use multiple rules (MockitoExtension, Spring runner etc) in a single class; unlike Runner, where we can define only one runner.
+
+@spy
+If we want to use the real class (instead of mock whole class), but would lile to override certain thing from that class, then use @spy
+
+
+We cannot mock final classes, static methods, final method. Cannot mock equals(), hashcode()
+We can mock interface and classes.
+
+Note: thread-safety or thread-safe code in Java refers to code that can safely be utilized or shared in concurrent or multi-threading environment and they will behave as expected.
+
+Is Mockito thread-safe?
+For healthy scenarios Mockito plays nicely with threads. For instance, you can run tests in parallel to speed up the build. Also, you can let multiple threads call methods on a shared mock to test in concurrent 
+conditions. However, Mockito is only thread-safe in healthy tests, that is tests without multiple threads stubbing/verifying a shared mock. 
+Stubbing or verification of a shared mock from different threads is NOT the proper way of testing because it will always lead to intermittent behavior. I
+
+Can I verify toString()?
+No. You can stub it
+
+
+
+
 
 
 
