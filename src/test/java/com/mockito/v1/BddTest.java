@@ -68,6 +68,12 @@ public class BddTest {
     }
 
 
+    /*
+    This method tests there are 2 calls of todoService.retrieveTodos()
+    One with "Dummy" as param
+    Another is "abc" as param
+     */
+
     @Test
     public void testThenCaptureAugumentBDDMultipleCall() {
 
