@@ -104,3 +104,13 @@ public class JUnit5TestSuiteExample
 @ExcludeTags Example
 This test suite will exclude all tests tagged with development inside package com.howtodoinjava.junit5.examples (and it’s sub-packages).
 
+[Mockito V1](Mockito_v1.md)
+
+Disadvantages of Stub:
+1.Say the object which we want to stub, want to test with multiple value, then we need to sebd multiple values separately
+2. If new method we added, need to create new method in Stub as well
+
+Basically in Stub we preparing a dummy obj and passing as method param
+In Mock we creating mock and using java reflection
+
+  
