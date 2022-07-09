@@ -185,6 +185,27 @@ public class MyDictionaryTest {
 }
 
 
+But do we need InjectMock everywhere when usig mock?
+No, if we can pass those mock objects somehow (say using constructor), then inject mock not needed
+
+@ExtendWith(SpringExtension.class)
+public class MyDictionaryTest {
+
+    @Mock
+    Map<String, String> wordMap;
+
+    //@InjectMocks
+    //MyDictionary dic = new MyDictionary(wordMap);
+
+    @Test
+    public void whenUseInjectMocksAnnotation_thenCorrect() {
+        Mockito.when(wordMap.get("aWord")).thenReturn("aMeaning");
+        MyDictionary dic = new MyDictionary(wordMap);//IMP
+        assertEquals("aMeaning", dic.getMeaning("aWord"));
+    }
+
+}
+
 ```
 
 
