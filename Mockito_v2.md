@@ -16,7 +16,8 @@ the com.abc.powermockito.introduction package for mocking.
 
 Power mock does not support junit 5, so, we need junit dependency. 
 
-Please refer JunitTutorials project for details  
+
+Please refer JunitTutorials project for details   (also check powermock readme.md once)
 
 
 static method test: Nothing special, can do using normal junit only (mockito or powermock not needed)  
@@ -44,16 +45,13 @@ final method mock: (Mockito: Cannot mock final methods), need to use Power Mock
  
 constructor mocking: Power Mock. Using whenNew()  
 
-Partial mocking possible for static, final and private methods.  
+Partial mocking possible for static, final and private methods. power mock can be used with @spy  
 
 Mocking for private method, static method and constructor is bad design.  
 
 
 ### TODO: mutation test
 ### TODO: flapdrool
-
-
-
 
 
 
