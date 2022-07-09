@@ -52,7 +52,7 @@ public class JunitParameterizedTest {
 ```
 
 Test Suite:
-I think, siute class should be in parent package or in the same package where the class is present
+I think, Suite class should be in parent package or in the same package where the class is present
 
 ```
 @SelectPackages({"com.sample"})
@@ -64,7 +64,7 @@ public class JUnit5TestSuiteExample {
 }
 ```
 
-@SelectPackages
+@SelectPackages:  
 @SelectPackages specifies the names of packages to select when running a test suite via @RunWith(JUnitPlatform.class).
 ```
 @Suite
@@ -85,8 +85,8 @@ As we learn that @SelectPackages causes all its sub-packages as well to be scann
 If you want to exclude any specific package or include any package then you may use @IncludePackages and @ExcludePackages annotations.
 
 
-@IncludeClassNamePatterns 
-@ExcludeClassNamePatterns
+@IncludeClassNamePatterns   
+@ExcludeClassNamePatterns  
 
 @IncludeTags Example
 This test suite will run all tests tagged with production inside package com.howtodoinjava.junit5.examples (and its sub-packages).
@@ -106,6 +106,7 @@ This test suite will exclude all tests tagged with development inside package co
 
 [Mockito V1](Mockito_v1.md)
 
+[Mockito V2](Mockito_v2.md)
 
 
   

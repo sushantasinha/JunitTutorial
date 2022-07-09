@@ -66,29 +66,27 @@ assertThat(null, isEmptyOrNullString());
 
 
 Mockito Annotations
-@Mock
-@InjectMocks
-@RunWith(MockitoJUnitRunner.class)
-@Captor
+@Mock  
+@InjectMocks  
+@RunWith(MockitoJUnitRunner.class)  
+@Captor  
 
 
 If you are using Junit version < 5, so you have to use @RunWith(SpringRunner.class) or @RunWith(MockitoJUnitRunner.class) etc.
 If you are using Junit version = 5, so you have to use @ExtendWith(SpringExtension.class) or @ExtendWith(MockitoExtension.class) etc.
 
-SpringRunner
-MockitoJUnitRunner
-SpringExtension
-MockitoExtension
+SpringRunner  
+MockitoJUnitRunner  
+SpringExtension  
+MockitoExtension  
 
 
 ### What is the difference between @ExtendWith(SpringExtension.class) and @ExtendWith(MockitoExtension.class)?
 
 #### When involving Spring:
-
 If you want to use Spring test framework features in your tests like for example @MockBean, then you have to use @ExtendWith(SpringExtension.class). It replaces the deprecated JUnit4 @RunWith(SpringJUnit4ClassRunner.class)
 
 #### When NOT involving Spring:
-
 If you just want to involve Mockito and don't have to involve Spring, for example, when you just want to use the @Mock / @InjectMocks annotations, 
 then you want to use @ExtendWith(MockitoExtension.class), as it doesn't load in a bunch of unneeded Spring stuff. It replaces the deprecated JUnit4 @RunWith(MockitoJUnitRunner.class).
 
@@ -137,7 +135,8 @@ public class CTodoBusinessImplWIthInjectMockWithAnnotationTest {
 }
 ```
 
-@InjectMock will allow mockito to check all the instance variables inside TodoBusinessImpl, and check for those members if there is any @Mock available. Like, TodoBusinessImpl has one instance member for TodoService...
+@InjectMock will allow mockito to check all the instance variables inside TodoBusinessImpl, and check for those members if 
+there is any @Mock available. Like, TodoBusinessImpl has one instance member for TodoService...
 And, corresponding mock is available in the test class
 
 ```
@@ -148,6 +147,50 @@ And, corresponding mock is available in the test class
 So, it will create an instance for TodoBusinessImpl and for that instance's TodoService, wil be mocked by (@Mock TodoService todoService;)
 
 
+```
+Please note, if we commented out InjectMocks and use normal object creation here, mock will not work as "wordMap" will NOT be mocked.
+
+
+public class MyDictionary {
+    Map<String, String> wordMap;
+
+    public MyDictionary() {
+        wordMap = new HashMap<String, String>();
+    }
+    public void add(final String word, final String meaning) {
+        wordMap.put(word, meaning);
+    }
+    public String getMeaning(final String word) {
+        return wordMap.get(word);
+    }
+}
+
+
+
+@ExtendWith(SpringExtension.class)
+public class MyDictionaryTest {
+
+    @Mock
+    Map<String, String> wordMap;
+
+    //@InjectMocks
+    MyDictionary dic = new MyDictionary();
+
+    @Test
+    public void whenUseInjectMocksAnnotation_thenCorrect() {
+        Mockito.when(wordMap.get("aWord")).thenReturn("aMeaning");
+        assertEquals("aMeaning", dic.getMeaning("aWord"));
+    }
+
+}
+
+
+```
+
+
+ArgumentCaptor allows us to capture an argument passed to a method in order to inspect it. This is especially useful when we can't access the argument outside of the method we'd like to test.
+i.e. when we have a local variable within method and we want to validate it.
+
 ArgumentCaptor<String> stringArgumentCaptor = ArgumentCaptor.forClass(String.class);
 
 can be replaced by:
@@ -155,6 +198,50 @@ can be replaced by:
     @Captor
     ArgumentCaptor<String> stringArgumentCaptor;
 ```
+
+
+```
+public class EmailService {
+
+    private DeliveryPlatform platform;
+
+    public EmailService(DeliveryPlatform platform) {
+        this.platform = platform;
+    }
+
+    public void send(String to, String subject, String body, boolean html) {
+        Format format = Format.TEXT_ONLY;
+        if (html) {
+            format = Format.HTML;
+        }
+        Email email = new Email(to, subject, body);
+        email.setFormat(format);
+        platform.deliver(email);
+    }
+
+    ...
+}
+
+
+@Test
+public void whenDoesSupportHtml_expectHTMLEmailFormat() {
+    String to = "info@baeldung.com";
+    String subject = "Using ArgumentCaptor";
+    String body = "Hey, let'use ArgumentCaptor";
+
+    emailService.send(to, subject, body, true);
+
+    Mockito.verify(platform).deliver(emailCaptor.capture());
+    Email value = emailCaptor.getValue();
+    assertEquals(Format.HTML, value.getFormat());
+}
+
+
+
+```
+
+
+
 
 
 Instead of Junit runner, we can sue rule:
@@ -173,13 +260,15 @@ public MocktoRule m = MockitoExtension.rule();
 The advantage of Rule is we can use multiple rules (MockitoExtension, Spring runner etc) in a single class; unlike Runner, where we can define only one runner.
 
 @spy
-If we want to use the real class (instead of mock whole class), but would lile to override certain thing from that class, then use @spy
+If we want to use the real class (instead of mock whole class), but would like to override certain thing from that class, then use @spy
 
 
 We cannot mock final classes, static methods, final method. Cannot mock equals(), hashcode()
 We can mock interface and classes.
 
-Note: thread-safety or thread-safe code in Java refers to code that can safely be utilized or shared in concurrent or multi-threading environment and they will behave as expected.
+Note: thread-safety or thread-safe code in Java refers to code that can safely be utilized or shared in concurrent or 
+multi-threading environment and they will behave as expected.
+
 
 Is Mockito thread-safe?
 For healthy scenarios Mockito plays nicely with threads. For instance, you can run tests in parallel to speed up the build. Also, you can let multiple threads call methods on a shared mock to test in concurrent 
