@@ -298,6 +298,8 @@ Stubbing or verification of a shared mock from different threads is NOT the prop
 
 Can I verify toString()?
 No. You can stub it
+  
+  Run junit parallel: You can accomplish this with JUnit's ParallelComputer
 
 
 
