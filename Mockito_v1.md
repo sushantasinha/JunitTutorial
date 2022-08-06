@@ -302,7 +302,7 @@ No. You can stub it
   Run junit parallel: You can accomplish this with JUnit's ParallelComputer
 
 
-
+***We can mock interface and classes.***
 
 
 
