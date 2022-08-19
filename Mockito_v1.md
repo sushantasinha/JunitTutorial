@@ -118,6 +118,24 @@ Please note, if we use @Mock, then need @ExtendWith(MockitoExtension.class) to b
 
 @Mock vs @InjectMock
 
+when we use constructor based injection then InjectMock not needed, because we create calling class obj like,
+
+```
+Class Abc {}
+
+Class AbcTest {
+
+...
+Abc abc = new Abc(...passing mock objects);
+
+}
+```
+
+
+
+
+
+
 ```
 ExtendWith(MockitoExtension.class)
 public class CTodoBusinessImplWIthInjectMockWithAnnotationTest {
